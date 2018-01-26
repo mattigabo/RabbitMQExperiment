@@ -4,15 +4,15 @@
  * Created by Matteo Gabellini on 25/01/2018.
  */
 
-import com.rabbitmq.client.ConnectionFactory
-import com.rabbitmq.client.Connection
 import com.rabbitmq.client.Channel
+import com.rabbitmq.client.Connection
+import com.rabbitmq.client.ConnectionFactory
 import java.util.concurrent.atomic.AtomicBoolean
 
 class BrokerConnector  private constructor (host: String) {
 
-    val factory: ConnectionFactory = ConnectionFactory()
-    val connection: Connection
+    private val factory: ConnectionFactory = ConnectionFactory()
+    private val connection: Connection
     val channel:Channel
 
     init {
@@ -24,7 +24,12 @@ class BrokerConnector  private constructor (host: String) {
         }
     }
 
-    fun getNewQueue(): String = channel.queueDeclare().getQueue()
+    fun getNewQueue(): String = channel.queueDeclare().queue
+
+    fun close() {
+        channel.close()
+        connection.close()
+    }
 
     companion object {
         lateinit var INSTANCE: BrokerConnector

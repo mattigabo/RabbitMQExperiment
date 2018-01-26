@@ -1,15 +1,17 @@
+package singlequeueexchange
+
 /**
  * Created by Matteo Gabellini on 24/01/2018.
  */
-import com.rabbitmq.client.ConnectionFactory
-import com.rabbitmq.client.Connection
 import com.rabbitmq.client.Channel
+import com.rabbitmq.client.Connection
+import com.rabbitmq.client.ConnectionFactory
 
 
 @Throws(Exception::class)
 fun main(argv: Array<String>) {
-    val QUEUE_NAME: String = "hello"
-    val factory: ConnectionFactory = ConnectionFactory()
+    val QUEUE_NAME = "hello"
+    val factory = ConnectionFactory()
     factory.host = "localhost"
     val connection: Connection = factory.newConnection()
     val channel: Channel = connection.createChannel()

@@ -1,4 +1,6 @@
 /**
+ *
+ * A Wrapper of a Publisher for RabbitMQ Broker
  * Created by Matteo Gabellini on 25/01/2018.
  */
 class Publisher(val connector: BrokerConnector) {
@@ -14,7 +16,9 @@ fun main(argv: Array<String>){
     BrokerConnector.init("localhost")
     val pub = Publisher(BrokerConnector.INSTANCE)
     //LifeParameters.values().forEach { X -> pub.publish("Stampo su "+ X.longName, X) }
-    for (i in 0..10) {
+    for (i in 0 until 10) {
         pub.publish(i.toString(), LifeParameters.HEART_RATE)
     }
+
+    //BrokerConnector.INSTANCE.close()
 }
