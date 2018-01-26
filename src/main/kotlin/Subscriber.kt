@@ -41,14 +41,17 @@ class Subscriber(val connector: BrokerConnector) {
      * */
     fun subscribedChannel() = HashMap<String, String>().putAll(this.subscribedChannel)
 
-    fun stringConsumer(messageHandler: (String) -> Any): Consumer = object : DefaultConsumer(connector.channel) {
-        @Throws(java.io.IOException::class)
-        override fun handleDelivery(consumerTag: String,
-                                    envelope: Envelope,
-                                    properties: AMQP.BasicProperties,
-                                    body: ByteArray) {
-            val message = String(body, Charsets.UTF_8)
-            messageHandler(message)
+    fun createStringConsumer(messageHandler: (String) -> Any): Consumer
+    return{
+        object : DefaultConsumer(connector.channel) {
+            @Throws(java.io.IOException::class)
+            override fun handleDelivery(consumerTag: String,
+                                        envelope: Envelope,
+                                        properties: AMQP.BasicProperties,
+                                        body: ByteArray) {
+                val message = String(body, Charsets.UTF_8)
+                messageHandler(message)
+            }
         }
     }
 }
