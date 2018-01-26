@@ -32,7 +32,7 @@ class PubSubTest{
 
         val sub = Thread({
             val sub = Subscriber(connector)
-            sub.subscribe(LifeParameters.HEART_RATE, sub.stringConsumer { X -> subReceivedMessages.add(X) })
+            sub.subscribe(LifeParameters.HEART_RATE, sub.createStringConsumer { X -> subReceivedMessages.add(X) })
         })
         sub.start()
 
@@ -57,13 +57,13 @@ class PubSubTest{
         val sub1Code = Runnable {
             val sub = Subscriber(connector)
             LifeParameters.values().forEach { X ->
-                sub.subscribe(X, sub.stringConsumer { sub1ReceivedMessages.add(it) })
+                sub.subscribe(X, sub.createStringConsumer { sub1ReceivedMessages.add(it) })
             }
         }
         val sub2Code = Runnable {
             val sub = Subscriber(connector)
             LifeParameters.values().forEach { X ->
-                sub.subscribe(X, sub.stringConsumer { sub2ReceivedMessages.add(it) })
+                sub.subscribe(X, sub.createStringConsumer { sub2ReceivedMessages.add(it) })
             }
         }
 
@@ -103,13 +103,13 @@ class PubSubTest{
         val sub1Code = Runnable {
             val sub = Subscriber(connector)
             LifeParameters.values().forEach { X ->
-                sub.subscribe(X, sub.stringConsumer { sub1ReceivedMessages.add(it) })
+                sub.subscribe(X, sub.createStringConsumer { sub1ReceivedMessages.add(it) })
             }
         }
         val sub2Code = Runnable {
             val sub = Subscriber(connector)
             LifeParameters.values().forEach { X ->
-                sub.subscribe(X, sub.stringConsumer { sub2ReceivedMessages.add(it) })
+                sub.subscribe(X, sub.createStringConsumer { sub2ReceivedMessages.add(it) })
             }
         }
 
@@ -146,7 +146,7 @@ class PubSubTest{
 
         val sub = Thread({
             val sub = Subscriber(connector)
-            sub.subscribe(LifeParameters.HEART_RATE, sub.stringConsumer { X -> subReceivedMessages.add(X) })
+            sub.subscribe(LifeParameters.HEART_RATE, sub.createStringConsumer { X -> subReceivedMessages.add(X) })
             Thread.sleep(3000)
             sub.unsubscribe(LifeParameters.HEART_RATE)
         })
@@ -185,7 +185,7 @@ class PubSubTest{
 
         val sub = Thread({
             val sub = Subscriber(connector)
-            sub.subscribe(LifeParameters.HEART_RATE, sub.stringConsumer { X -> subReceivedMessages.add(X) })
+            sub.subscribe(LifeParameters.HEART_RATE, sub.createStringConsumer { X -> subReceivedMessages.add(X) })
         })
         sub.start()
 
@@ -201,7 +201,7 @@ class PubSubTest{
 
         val sub1Code = Runnable {
             val sub = Subscriber(connector)
-            val consumer = sub.stringConsumer { X -> sub1ReceivedMessages.add(X) }
+            val consumer = sub.createStringConsumer { X -> sub1ReceivedMessages.add(X) }
             sub.subscribe(LifeParameters.HEART_RATE, consumer)
             sub.subscribe(LifeParameters.DIASTOLIC_BLOOD_PRESSURE, consumer)
             sub.subscribe(LifeParameters.END_TIDAL_CARBON_DIOXIDE, consumer)
@@ -209,7 +209,7 @@ class PubSubTest{
 
         val sub2Code = Runnable {
             val sub = Subscriber(connector)
-            val consumer = sub.stringConsumer { X -> sub2ReceivedMessages.add(X) }
+            val consumer = sub.createStringConsumer { X -> sub2ReceivedMessages.add(X) }
             sub.subscribe(LifeParameters.OXYGEN_SATURATION, consumer)
             sub.subscribe(LifeParameters.SYSTOLIC_BLOOD_PRESSURE, consumer)
             sub.subscribe(LifeParameters.TEMPERATURE, consumer)
@@ -249,7 +249,7 @@ class PubSubTest{
 
         val sub1Code = Runnable {
             val sub = Subscriber(connector)
-            val consumer = sub.stringConsumer { X -> sub1ReceivedMessages.add(X) }
+            val consumer = sub.createStringConsumer { X -> sub1ReceivedMessages.add(X) }
             sub.subscribe(LifeParameters.HEART_RATE, consumer)
             sub.subscribe(LifeParameters.DIASTOLIC_BLOOD_PRESSURE, consumer)
             sub.subscribe(LifeParameters.END_TIDAL_CARBON_DIOXIDE, consumer)
@@ -257,7 +257,7 @@ class PubSubTest{
 
         val sub2Code = Runnable {
             val sub = Subscriber(connector)
-            val consumer = sub.stringConsumer { X -> sub2ReceivedMessages.add(X) }
+            val consumer = sub.createStringConsumer { X -> sub2ReceivedMessages.add(X) }
             sub.subscribe(LifeParameters.HEART_RATE, consumer)
             sub.subscribe(LifeParameters.SYSTOLIC_BLOOD_PRESSURE, consumer)
             sub.subscribe(LifeParameters.TEMPERATURE, consumer)

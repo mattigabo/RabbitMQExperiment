@@ -41,9 +41,8 @@ class Subscriber(val connector: BrokerConnector) {
      * */
     fun subscribedChannel() = HashMap<String, String>().putAll(this.subscribedChannel)
 
-    fun createStringConsumer(messageHandler: (String) -> Any): Consumer
-    return{
-        object : DefaultConsumer(connector.channel) {
+    fun createStringConsumer(messageHandler: (String) -> Any): Consumer {
+    return object : DefaultConsumer(connector.channel) {
             @Throws(java.io.IOException::class)
             override fun handleDelivery(consumerTag: String,
                                         envelope: Envelope,
@@ -60,7 +59,7 @@ fun main(argv: Array<String>){
     BrokerConnector.init("localhost")
     val sub = Subscriber(BrokerConnector.INSTANCE)
 
-    val consumer = sub.stringConsumer { X ->
+    val consumer = sub.createStringConsumer { X ->
         println(X)
     }
     LifeParameters.values().forEach { X -> sub.subscribe(X, consumer) }
