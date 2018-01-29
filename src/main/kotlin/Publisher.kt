@@ -1,24 +1,14 @@
 /**
- *
- * A Wrapper of a Publisher for RabbitMQ Broker
- * Created by Matteo Gabellini on 25/01/2018.
+ * An interface for a generic publisher
+ * @param X the message type published
+ * @param T the type of topics where the publisher sends messages
+ * Created by Matteo Gabellini on 29/01/2018.
  */
-class Publisher(val connector: BrokerConnector) {
-
-    fun publish(message:String, topic: LifeParameters) {
-        connector.channel.basicPublish(topic.acronym,"", null, message.toByteArray(charset("UTF-8")))
-        println(" [x] Sent '$message' on '${topic.acronym}' ")
-
-    }
-}
-
-fun main(argv: Array<String>){
-    BrokerConnector.init("localhost")
-    val pub = Publisher(BrokerConnector.INSTANCE)
-    //LifeParameters.values().forEach { X -> pub.publish("Stampo su "+ X.longName, X) }
-    for (i in 0 until 10) {
-        pub.publish(i.toString(), LifeParameters.HEART_RATE)
-    }
-
-    //BrokerConnector.INSTANCE.close()
+interface Publisher<X, T> {
+    /**
+     * The function that publish a message on the specified topic
+     * @param message the message published on the topic
+     * @param topic the topic where the message is published
+     */
+    fun publish(message: X, topic: T)
 }

@@ -8,4 +8,9 @@ enum class LifeParameters(val longName: String, val acronym:String){
     TEMPERATURE("Temperatura", "T"),
     OXYGEN_SATURATION("Saturazione Ossigeno", "SpO2"),
     END_TIDAL_CARBON_DIOXIDE("End Tidal Anidride Carbonica", "EtCO2")
+
+}
+
+object LifeParametersUtils {
+    fun getByAcronym(acr: String) = LifeParameters.values().first { it.acronym == acr }
 }
